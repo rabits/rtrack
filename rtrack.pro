@@ -1,43 +1,35 @@
-# Add more folders to ship with the application, here
+# Version
+VERSION='0.0.1'
+VERSTR='\\"$${VERSION}\\"'
+DEFINES += PROJECT_VERSION=\"$${VERSTR}\"
+
 folder_01.source = qml/rtrack
 folder_01.target = qml
 DEPLOYMENTFOLDERS = folder_01
 
-# Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
-symbian:TARGET.UID3 = 0xE06CAE3C
-
-# Smart Installer package's UID
-# This UID is from the protected range and therefore the package will
-# fail to install if self-signed. By default qmake uses the unprotected
-# range value if unprotected UID is defined for the application and
-# 0x2002CCCF value if protected UID is given to the application
-#symbian:DEPLOYMENT.installer_header = 0x2002CCCF
-
-# Allow network access on Symbian
+# Symbian
 symbian {
-    TARGET.CAPABILITY += NetworkServices
+    TARGET.UID3 = 0xE06CAE3C
+    #TARGET.CAPABILITY += NetworkServices
 
     # Sensor
     TARGET.EPOCSTACKSIZE = 0x14000
     TARGET.EPOCHEAPSIZE = 0x020000 0x800000
+
+    CONFIG += qt-components
 }
 
-# If your application uses the Qt Mobility libraries, uncomment the following
-# lines and add the respective components to the MOBILITY variable.
-CONFIG += mobility
+CONFIG += mobility qdeclarative-boostable
 MOBILITY += sensors
 
-# Speed up launching on MeeGo/Harmattan when using applauncherd daemon
-CONFIG += qdeclarative-boostable
-
-# Add dependency to Symbian components
-# CONFIG += qt-components
-
-# The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    src/ctrack.cpp
+    src/ctrack.cpp \
+    src/caccelerometerfilter.cpp \
+    src/caccelerometer.cpp \
+    src/crotation.cpp \
+    src/crotationfilter.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -53,4 +45,8 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/changelog
 
 HEADERS += \
-    src/ctrack.h
+    src/ctrack.h \
+    src/caccelerometerfilter.h \
+    src/caccelerometer.h \
+    src/crotation.h \
+    src/crotationfilter.h

@@ -6,10 +6,12 @@
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
+    qDebug("[rTrack] Init rTrack v"PROJECT_VERSION);
+
     QCoreApplication::setOrganizationName("Rabits");
     QCoreApplication::setOrganizationDomain("rabits.ru");
     QCoreApplication::setApplicationName("rtrack");
-    QCoreApplication::setApplicationVersion("0.0.1");
+    QCoreApplication::setApplicationVersion(PROJECT_VERSION);
 
     QScopedPointer<QApplication> app(createApplication(argc, argv));
 
@@ -21,6 +23,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     CTrack::getInstance()->initRoot(viewer);
 
+    qDebug("[rTrack] Init done, starting");
     viewer.showExpanded();
     return app->exec();
 }

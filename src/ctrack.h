@@ -6,10 +6,15 @@
 #include <QtDeclarative/QDeclarativeContext>
 #include <QGraphicsObject>
 #include <qplatformdefs.h> // MEEGO_EDITION_HARMATTAN
+#include <QVector3D>
 
 #include "qmlapplicationviewer.h"
 
-class CTrack : public QObject
+#include "caccelerometer.h"
+#include "crotation.h"
+
+class CTrack
+    : public QObject
 {
     Q_OBJECT
 private:
@@ -20,6 +25,9 @@ private:
     QGraphicsObject*     m_root_object;
     QDeclarativeContext* m_context;
 
+    CAccelerometer m_accel;
+    CRotation      m_rot;
+
     QSettings   m_settings;
 
 public:
@@ -29,13 +37,11 @@ public:
     void initContext(QmlApplicationViewer& viewer);
     void initRoot(QmlApplicationViewer& viewer);
 
+    Q_INVOKABLE QVector3D orientation();
+    Q_INVOKABLE QVector3D ground();
+
     Q_INVOKABLE inline QSettings* settings() { return &m_settings; }
     Q_INVOKABLE QVariant setting(QString key, QString value = "");
-
-signals:
-
-public slots:
-
 };
 
 #endif // CTRACK_H
